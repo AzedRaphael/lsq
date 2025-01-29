@@ -5,6 +5,7 @@ import { auth, clerkClient, currentUser } from '@clerk/nextjs/server';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import {
+  createReviewSchema,
   imageSchema,
   profileSchema,
   propertySchema,
@@ -282,15 +283,6 @@ export const fetchFavorites = async (): Promise<PropertyCardProps[]> => {
   }));
 };
 
-// export const fetchPropertyDetails = (id: string) => {
-//   return db.property.findUnique({
-//     where: { id },
-//     include: {
-//       profile: true,
-//     },
-//   });
-// };
-
 export const fetchPropertyDetails = async (id: string) => {
   const property = await db.property.findUnique({
     where: { id },
@@ -300,4 +292,43 @@ export const fetchPropertyDetails = async (id: string) => {
   });
 
   return property;
+};
+
+export const createReviewAction = async (
+  prevState: any,
+  formData: FormData
+) => {
+  const user = await getAuthUser();
+  try {
+    const rawData = Object.fromEntries(formData);
+
+    const validatedFields = validateWithZodSchema(createReviewSchema, rawData);
+
+    await db.review.create({
+      data: {
+        // propertyId: validatedFields.propertyId,
+        // rating: validatedFields.rating,
+        // comment: validatedFields.comment,
+        ...validatedFields,
+        profileId: user.id,
+      },
+    });
+
+    revalidatePath(`/properties/${validatedFields.propertyId}`);
+    return { message: 'Review submitted successfully' };
+  } catch (error) {
+    return renderError(error);
+  }
+};
+
+export const fetchPropertyReviews = async () => {
+  return { message: 'fetch reviews' };
+};
+
+export const fetchPropertyReviewsByUser = async () => {
+  return { message: 'fetch user reviews' };
+};
+
+export const deleteReviewAction = async () => {
+  return { message: 'delete  reviews' };
 };

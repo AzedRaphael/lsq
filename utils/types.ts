@@ -1,5 +1,5 @@
 export type actionFunction = (
-  prevState: unknown,
+  prevState: any,
   formData: FormData
 ) => Promise<{ message: string }>;
 
