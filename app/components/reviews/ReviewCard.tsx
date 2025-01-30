@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import Rating from './Rating';
-import Comment from './comments';
+import Comment from './Comments';
 type ReviewCardProps = {
   reviewInfo: {
     comment: string;
