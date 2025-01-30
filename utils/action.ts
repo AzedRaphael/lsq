@@ -306,9 +306,6 @@ export const createReviewAction = async (
 
     await db.review.create({
       data: {
-        // propertyId: validatedFields.propertyId,
-        // rating: validatedFields.rating,
-        // comment: validatedFields.comment,
         ...validatedFields,
         profileId: user.id,
       },
@@ -321,12 +318,31 @@ export const createReviewAction = async (
   }
 };
 
-export const fetchPropertyReviews = async () => {
+export const fetchPropertyReviewsByUser = async () => {
   return { message: 'fetch reviews' };
 };
 
-export const fetchPropertyReviewsByUser = async () => {
-  return { message: 'fetch user reviews' };
+export const fetchPropertyReviews = async (propertyId: string) => {
+  const reviews = await db.review.findMany({
+    where: {
+      propertyId,
+    },
+    select: {
+      id: true,
+      rating: true,
+      comment: true,
+      profile: {
+        select: {
+          firstName: true,
+          profileImage: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+  return reviews;
 };
 
 export const deleteReviewAction = async () => {

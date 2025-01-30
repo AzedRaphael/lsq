@@ -9,6 +9,7 @@ import PropertyDetails from '@/app/components/properties/PropertyDetails';
 import PropertyMap from '@/app/components/properties/PropertyMap';
 import ShareButton from '@/app/components/properties/ShareButton';
 import UserInfo from '@/app/components/properties/UserInfo';
+import PropertyReviews from '@/app/components/reviews/PropertyReviews';
 import SubmitReview from '@/app/components/reviews/SubmitReview';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -69,6 +70,7 @@ export default async function PropertyDetailsPage({
         </div>
       </section>
       <SubmitReview propertyId={property.id} />
+      <PropertyReviews propertyId={property.id} />
     </section>
   );
 }
