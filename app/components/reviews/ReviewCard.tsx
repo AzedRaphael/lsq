@@ -13,7 +13,7 @@ type ReviewCardProps = {
 
 export default function ReviewCard({ reviewInfo, children }: ReviewCardProps) {
   return (
-    <Card>
+    <Card className='relative'>
       <CardHeader>
         <div className='flex items-center'>
           <img

@@ -12,7 +12,7 @@ export default function Homepage({
   // const category = searchParams?.category || '';
   // const search = searchParams?.search || '';
   return (
-    <section>
+    <section suppressHydrationWarning>
       <CategoriesList
         category={searchParams.category}
         search={searchParams.search}
